@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import NavLink from "./NavLink";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import MenuOverlay from "./MenuOverlay";
+import Image from "next/image";
 
 const navLinks = [
   {
@@ -11,12 +12,8 @@ const navLinks = [
     path: "#about",
   },
   {
-    title: "Projects",
+    title: "Download",
     path: "#projects",
-  },
-  {
-    title: "Contact",
-    path: "#contact",
   },
 ];
 
@@ -30,7 +27,14 @@ const Navbar = () => {
           href={"/"}
           className="text-2xl md:text-5xl text-white font-semibold"
         >
-          LOGO
+          {/* GIIGS */}
+          <Image
+            src="/images/giigsVector916.png"
+            alt="giigs music booking app logo"
+            className=""
+            width={100}
+            height={100}
+          />
         </Link>
         <div className="mobile-menu block md:hidden">
           {!navbarOpen ? (

@@ -11,22 +11,22 @@ const AnimatedNumbers = dynamic(
 
 const achievementsList = [
   {
-    metric: "Projects",
-    value: "100",
-    postfix: "+",
+    metric: "Music Booking App",
+    value: "1",
+    prefix: "#",
   },
   {
-    prefix: "~",
-    metric: "Users",
-    value: "100,000",
+    postfix: " stars",
+    metric: "Reviews",
+    value: "5",
   },
   {
-    metric: "Awards",
+    metric: "Countries using Giigs",
     value: "7",
   },
   {
-    metric: "Years",
-    value: "5",
+    metric: "States using Giigs",
+    value: "50",
   },
 ];
 

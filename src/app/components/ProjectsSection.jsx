@@ -1,126 +1,82 @@
 "use client";
 import React, { useState, useRef } from "react";
-import ProjectCard from "./ProjectCard";
-import ProjectTag from "./ProjectTag";
-import { motion, useInView } from "framer-motion";
-
-const projectsData = [
-  {
-    id: 1,
-    title: "React Portfolio Website",
-    description: "Project 1 description",
-    image: "/images/projects/1.png",
-    tag: ["All", "Web"],
-    gitUrl: "/",
-    previewUrl: "/",
-  },
-  {
-    id: 2,
-    title: "Potography Portfolio Website",
-    description: "Project 2 description",
-    image: "/images/projects/2.png",
-    tag: ["All", "Web"],
-    gitUrl: "/",
-    previewUrl: "/",
-  },
-  {
-    id: 3,
-    title: "E-commerce Application",
-    description: "Project 3 description",
-    image: "/images/projects/3.png",
-    tag: ["All", "Web"],
-    gitUrl: "/",
-    previewUrl: "/",
-  },
-  {
-    id: 4,
-    title: "Food Ordering Application",
-    description: "Project 4 description",
-    image: "/images/projects/4.png",
-    tag: ["All", "Mobile"],
-    gitUrl: "/",
-    previewUrl: "/",
-  },
-  {
-    id: 5,
-    title: "React Firebase Template",
-    description: "Authentication and CRUD operations",
-    image: "/images/projects/5.png",
-    tag: ["All", "Web"],
-    gitUrl: "/",
-    previewUrl: "/",
-  },
-  {
-    id: 6,
-    title: "Full-stack Roadmap",
-    description: "Project 5 description",
-    image: "/images/projects/6.png",
-    tag: ["All", "Web"],
-    gitUrl: "/",
-    previewUrl: "/",
-  },
-];
+import Image from "next/image";
+import Link from "next/link";
 
 const ProjectsSection = () => {
-  const [tag, setTag] = useState("All");
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-
-  const handleTagChange = (newTag) => {
-    setTag(newTag);
-  };
-
-  const filteredProjects = projectsData.filter((project) =>
-    project.tag.includes(tag)
-  );
-
-  const cardVariants = {
-    initial: { y: 50, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-  };
-
   return (
-    <section id="projects">
-      <h2 className="text-center text-4xl font-bold text-white mt-4 mb-8 md:mb-12">
-        My Projects
-      </h2>
-      <div className="text-white flex flex-row justify-center items-center gap-2 py-6">
-        <ProjectTag
-          onClick={handleTagChange}
-          name="All"
-          isSelected={tag === "All"}
-        />
-        <ProjectTag
-          onClick={handleTagChange}
-          name="Web"
-          isSelected={tag === "Web"}
-        />
-        <ProjectTag
-          onClick={handleTagChange}
-          name="Mobile"
-          isSelected={tag === "Mobile"}
-        />
-      </div>
-      <ul ref={ref} className="grid md:grid-cols-3 gap-8 md:gap-12">
-        {filteredProjects.map((project, index) => (
-          <motion.li
-            key={index}
-            variants={cardVariants}
-            initial="initial"
-            animate={isInView ? "animate" : "initial"}
-            transition={{ duration: 0.3, delay: index * 0.4 }}
-          >
-            <ProjectCard
-              key={project.id}
-              title={project.title}
-              description={project.description}
-              imgUrl={project.image}
-              gitUrl={project.gitUrl}
-              previewUrl={project.previewUrl}
+    <section
+      id="projects"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        textAlign: "center",
+        marginTop: 400,
+        marginBottom: 400,
+      }}
+    >
+      {/* <h2 style={{ marginBottom: "20px", fontWeight: "700", fontSize: 42 }}>
+        Giigs
+      </h2> */}
+      <Image
+        src="/images/giigsVector916.png"
+        alt="giigs music booking app logo"
+        className=""
+        style={{ marginBottom: "20px" }}
+        width={200}
+        height={100}
+      />
+      <Image
+        src="/images/giigSplash.png"
+        alt="Giigs iOS Android Landing Splash Screen"
+        width={500}
+        height={500}
+      />
+      <p style={{ marginTop: "20px", fontWeight: "700", fontSize: 32 }}>
+        Opportunity In Your Pocket.
+      </p>
+      <p style={{ marginTop: "24px", fontWeight: "500", fontSize: 32 }}>
+        Download Giigs Today
+      </p>
+      <p style={{ marginTop: "4px", fontWeight: "500", fontSize: 32 }}>
+        Available on iOS and Android
+      </p>
+      <Link
+        href="https://apps.apple.com/us/app/giigs/id6467974842"
+        className="inline-block w-full sm:w-fit mt-3 mx-2"
+      >
+        <div className="px-1 py-1 rounded bg-gradient-to-br from-primary-500 to-secondary-500 hover:bg-slate-800 text-white">
+          <div className="bg-[#000000] rounded flex justify-center items-center">
+            <Image
+              src="/images/appStore.png"
+              alt="App Store Giigs App Download giigs Today on Apple App Store"
+              width={300}
+              height={90}
+              className="object-contain"
             />
-          </motion.li>
-        ))}
-      </ul>
+          </div>
+        </div>
+      </Link>
+
+      <Link
+        href="https://play.google.com/store/apps/details?id=com.brentpurks.Gigs&pcampaignid=web_share"
+        className="inline-block w-full sm:w-fit mt-3 mx-2"
+      >
+        <div className="px-1 py-1 rounded bg-gradient-to-br from-primary-500 to-secondary-500 hover:bg-slate-800 text-white ">
+          <div className="bg-[#000000] rounded flex justify-center items-center">
+            <Image
+              src="/images/googlePlay.png"
+              alt="google play giigs Download Giigs today on Google Play"
+              className="mx-0"
+              width={300}
+              height={90}
+            />
+          </div>
+        </div>
+      </Link>
     </section>
   );
 };

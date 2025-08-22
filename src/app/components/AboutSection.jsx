@@ -10,16 +10,16 @@ const TAB_DATA = [
     content: (
       <ul className="list-disc pl-2">
         <li>
-          With Giigs you have direct access to hiring venues in your area.
-        </li>
-        <li>Know exactly what each venue is looking for and apply</li>
-        <li>
-          Be your own agent, gone are the days of paying someone to find shows
-          for you.
+          Venues and hosts make booking decisions backed by data ratings,
+          reviews, and samples... not blind trust.
         </li>
         <li>
-          Stop playing in your parents basement, get noticed, get hired, get
-          Giigs.
+          Musicians can set clear rates, availability, and genres to attract the
+          right clients.
+        </li>
+        <li>
+          Both sides benefit from a streamlined, trustworthy ecosystem built for
+          transparency and results.
         </li>
       </ul>
     ),
@@ -29,13 +29,17 @@ const TAB_DATA = [
     id: "education",
     content: (
       <ul className="list-disc pl-2">
-        <li>Get out there and get noticed, to do that you must play live.</li>
         <li>
-          With Giigs, booking live shows for you band has never been easier.
+          Musicians gain meaningful visibility through media-rich profiles,
+          ratings, and reviews that prove their quality.
         </li>
         <li>
-          With Giigs you can rapidly build your fanbase, and move up from small
-          venues to large shows.
+          Hosts discover talent matched to their needs with filters, search, and
+          verified community feedback.{" "}
+        </li>
+        <li>
+          Giigs amplifies credibility. Artists stand out not just by looks or
+          luck, but by measurable reputation.
         </li>
       </ul>
     ),
@@ -45,17 +49,17 @@ const TAB_DATA = [
     id: "certifications",
     content: (
       <ul className="list-disc pl-2">
-        <li>Giigs is easy, there is no other way to slice it.</li>
-        <li>Simply download Giigs, make an account and begin applying.</li>
-        <li>Your profile is your resume.</li>
         <li>
-          Add links to all of your music and socials, add images and videos of
-          you playing live, music videos, or photo shoots to showcase your
-          music.
+          Instant audio previews and real ratings let venues book with
+          certainty, not guesswork.
         </li>
         <li>
-          Once hired, you receive a QR code and confirmation. The venue will
-          scan to check you in upon arrival to your show.
+          Clear communication tools ensure event details are finalized quickly
+          and smoothly.
+        </li>
+        <li>
+          From search to confirmation, every step is simple, reliable, and
+          backed by proof of talent.
         </li>
       </ul>
     ),
@@ -78,26 +82,22 @@ const AboutSection = () => {
         <Image
           src="/images/musicianProfile.png"
           alt="Giigs musician venue profile"
-          width={500}
-          height={500}
+          width={300}
+          height={300}
         />
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
           <h2 className="text-4xl font-bold text-white mb-4">Giigs</h2>
           <p className="text-base lg:text-lg">
-            Giigs, the revolutionary app designed to simplify the lives of
-            musicians and venues alike. This groundbreaking platform serves as a
-            nexus where talent and opportunity meet, streamlining the process of
-            hiring or being hired. Musicians can effortlessly showcase their
-            availability and open to work schedules, making it easier than ever
-            for venues to find the perfect act for their next event. Giigs is
-            more than just a booking app, it is a community. Whether you are a
-            solo musician or a venue owner, Giigs offers a space where you can
-            connect, collaborate, and create unforgettable experiences. With
-            user-friendly features and a seamless interface, Giigs takes the
-            hassle out of coordinating gigs, so you can focus on what really
-            matters: the music. Say goodbye to endless emails and phone calls.
-            With Giigs, your next performance is just a tap away. Get hired
-            today, and take your band to the next level with Giigs.
+            Giigs is the data-driven live music marketplace that takes the
+            guesswork out of booking musicians. Venues, event planners, and
+            private hosts can discover and instantly book talent based on real
+            profiles, verified ratings, and live audio samples... not hunches or
+            guesswork. Musicians showcase their best work through professional
+            profiles, while hosts use powerful search filters by genre,
+            location, and reviews to make informed decisions. With instant
+            booking, seamless communication, and transparent ratings, Giigs
+            brings confidence and efficiency to the live music experience for
+            both sides.
           </p>
           <div className="flex flex-row justify-start mt-8">
             <TabButton

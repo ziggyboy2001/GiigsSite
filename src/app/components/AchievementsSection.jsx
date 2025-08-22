@@ -16,17 +16,17 @@ const achievementsList = [
     prefix: "#",
   },
   {
-    postfix: " stars",
-    metric: "Reviews",
-    value: "5",
+    metric: "Major cities and counting",
+    value: "4",
   },
   {
-    metric: "Countries using Giigs",
-    value: "7",
+    metric: "Avg. hours saved per booking",
+    value: "3",
   },
   {
-    metric: "States using Giigs",
-    value: "50",
+    metric: "Free for a limited time",
+    value: "0",
+    prefix: "$",
   },
 ];
 

@@ -29,7 +29,7 @@ const Footer = () => {
             </Link>
           </div>
           <p className="text-slate-600 text-sm">
-            2024 BCB Labs L.L.C All rights reserved.
+            2023-2025 BCB Labs L.L.C All rights reserved.
           </p>
         </div>
       </div>

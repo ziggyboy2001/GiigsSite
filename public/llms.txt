@@ -1,0 +1,36 @@
+# Giigs
+
+> Giigs is a live music discovery app, the real-time map of live music near you. Fans use Giigs to find concerts and shows happening tonight, this week, or right now; browse by genre and distance; follow venues and artists; build multi-stop bar crawls with walk times and perks; check in at venues to redeem happy-hour pricing; save shows; invite friends; and get tickets in a tap. Venues, event planners, and private hosts use Giigs to discover and book musicians from verified profiles backed by Giigs Ratings, reviews, performance data, and live media. Free on iOS and Android, live in New Orleans and Atlanta with more cities being added.
+
+## Key facts
+
+- Name: Giigs
+- Category: Live music discovery, concerts, local events, music booking
+- Platforms: iOS and Android (free to download)
+- Live cities: New Orleans, Atlanta (more being added)
+- Made by: BCB Labs L.L.C
+- Contact: cesar@getgiigs.com
+
+## What fans can do
+
+- See a real-time map of live music nearby, including shows happening "live now" and later "tonight"
+- Filter shows by time (Live Now, Tonight, Tomorrow, Week) and by genre
+- View show details: artist, venue, set time, cover charge, distance
+- Get walking directions and build multi-stop bar crawls with walk times and perks
+- Check in at venues to redeem perks and happy-hour pricing
+- Save shows, see history, and invite friends
+- Get tickets to shows in a tap
+
+## What venues, planners, and musicians can do
+
+- Discover and book musicians using verified profiles, Giigs Ratings, reviews, and live audio/media
+- Musicians showcase media-rich profiles with rates, availability, and genres
+- Book directly in the app for live music, private events, corporate events, weddings, and more
+
+## Links
+
+- App Store: https://apps.apple.com/us/app/giigs/id6467974842
+- Google Play: https://play.google.com/store/apps/details?id=com.brentpurks.Gigs
+- Website: https://giigsapp.com
+- Privacy: https://giigsapp.com/privacy
+- Terms: https://giigsapp.com/termsofservice

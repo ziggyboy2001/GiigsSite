@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Official Next.js runtime for Netlify (handles SSR, image optimization,
+# route handlers like /robots.txt and /sitemap.xml, etc.)
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

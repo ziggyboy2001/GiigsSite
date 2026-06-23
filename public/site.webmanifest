@@ -1,0 +1,16 @@
+{
+  "name": "Giigs: Find Live Music Near You",
+  "short_name": "Giigs",
+  "description": "The real-time map of live music near you. Discover shows tonight, build bar crawls, and get tickets in a tap.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08080c",
+  "theme_color": "#08080c",
+  "icons": [
+    {
+      "src": "/images/giigsVector916.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}

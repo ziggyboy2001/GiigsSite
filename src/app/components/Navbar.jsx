@@ -1,69 +1,107 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
-import NavLink from "./NavLink";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import MenuOverlay from "./MenuOverlay";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { APP_STORE_URL } from "./StoreBadges";
 
 const navLinks = [
-  {
-    title: "About",
-    path: "#about",
-  },
-  {
-    title: "Download",
-    path: "#projects",
-  },
+  { title: "Discover", path: "#discover" },
+  { title: "How it works", path: "#how" },
+  { title: "For venues", path: "#venues" },
+  { title: "Download", path: "#download" },
 ];
 
 const Navbar = () => {
-  const [navbarOpen, setNavbarOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <nav className="fixed mx-auto border border-[#33353F] top-0 left-0 right-0 z-10 bg-[#121212] bg-opacity-100">
-      <div className="flex container lg:py-4 flex-wrap items-center justify-between mx-auto px-4 py-2">
-        <Link
-          href={"/"}
-          className="text-2xl md:text-5xl text-white font-semibold"
-        >
-          {/* GIIGS */}
+    <nav
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        scrolled ? "glass" : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto flex items-center justify-between px-5 py-3 lg:py-4">
+        <Link href="/" aria-label="Giigs home" className="flex items-center">
           <Image
             src="/images/giigsVector916.png"
-            alt="giigs music booking app logo"
-            className=""
-            width={100}
-            height={100}
+            alt="Giigs logo"
+            width={92}
+            height={40}
+            className="h-9 w-auto object-contain"
+            priority
           />
         </Link>
-        <div className="mobile-menu block md:hidden">
-          {!navbarOpen ? (
-            <button
-              onClick={() => setNavbarOpen(true)}
-              className="flex items-center px-3 py-2 border rounded border-slate-200 text-slate-200 hover:text-white hover:border-white"
-            >
-              <Bars3Icon className="h-5 w-5" />
-            </button>
-          ) : (
-            <button
-              onClick={() => setNavbarOpen(false)}
-              className="flex items-center px-3 py-2 border rounded border-slate-200 text-slate-200 hover:text-white hover:border-white"
-            >
-              <XMarkIcon className="h-5 w-5" />
-            </button>
-          )}
+
+        <ul className="hidden items-center gap-8 md:flex">
+          {navLinks.map((link) => (
+            <li key={link.path}>
+              <Link
+                href={link.path}
+                className="text-sm font-medium text-white/70 transition-colors hover:text-white"
+              >
+                {link.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="hidden md:block">
+          <Link
+            href={APP_STORE_URL}
+            className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-colors hover:bg-brand-600"
+          >
+            Get the app
+          </Link>
         </div>
-        <div className="menu hidden md:block md:w-auto" id="navbar">
-          <ul className="flex p-4 md:p-0 md:flex-row md:space-x-8 mt-0">
-            {navLinks.map((link, index) => (
-              <li key={index}>
-                <NavLink href={link.path} title={link.title} />
+
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Toggle menu"
+          className="rounded-lg border border-white/15 p-2 text-white md:hidden"
+        >
+          {open ? (
+            <XMarkIcon className="h-5 w-5" />
+          ) : (
+            <Bars3Icon className="h-5 w-5" />
+          )}
+        </button>
+      </div>
+
+      {open && (
+        <div className="glass border-t border-white/10 md:hidden">
+          <ul className="flex flex-col gap-1 px-5 py-4">
+            {navLinks.map((link) => (
+              <li key={link.path}>
+                <Link
+                  href={link.path}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-lg px-2 py-3 text-base text-white/80 hover:bg-white/5 hover:text-white"
+                >
+                  {link.title}
+                </Link>
               </li>
             ))}
+            <li className="pt-2">
+              <Link
+                href={APP_STORE_URL}
+                onClick={() => setOpen(false)}
+                className="block rounded-full bg-brand-500 px-5 py-3 text-center text-base font-semibold text-white"
+              >
+                Get the app
+              </Link>
+            </li>
           </ul>
         </div>
-      </div>
-      {navbarOpen ? <MenuOverlay links={navLinks} /> : null}
+      )}
     </nav>
   );
 };

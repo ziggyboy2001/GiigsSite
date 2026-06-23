@@ -1,22 +1,24 @@
-import HeroSection from "./components/HeroSection";
 import Navbar from "./components/Navbar";
-import AboutSection from "./components/AboutSection";
-import ProjectsSection from "./components/ProjectsSection";
-import EmailSection from "./components/EmailSection";
+import HeroSection from "./components/HeroSection";
+import StatBand from "./components/StatBand";
+import ProblemSection from "./components/ProblemSection";
+import FeaturesSection from "./components/FeaturesSection";
+import VenueMarquee from "./components/VenueMarquee";
+import BookingSection from "./components/BookingSection";
+import DownloadSection from "./components/DownloadSection";
 import Footer from "./components/Footer";
-import AchievementsSection from "./components/AchievementsSection";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col bg-[#121212]">
+    <main className="min-h-screen bg-ink-950 antialiased">
       <Navbar />
-      <div className="container mt-24 mx-auto px-12 py-4">
-        <HeroSection />
-        <AchievementsSection />
-        <AboutSection />
-        <ProjectsSection />
-        {/* <EmailSection /> */}
-      </div>
+      <HeroSection />
+      <StatBand />
+      <ProblemSection />
+      <FeaturesSection />
+      <VenueMarquee />
+      <BookingSection />
+      <DownloadSection />
       <Footer />
     </main>
   );

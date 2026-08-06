@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.brentpurks.Gigs",
+      "sha256_cert_fingerprints": [
+        "81:87:72:6A:63:5A:7F:BC:DB:04:8D:1C:53:69:F7:F1:FE:1F:FC:2B:1B:91:39:81:5A:56:3A:60:8E:62:61:33"
+      ]
+    }
+  }
+]

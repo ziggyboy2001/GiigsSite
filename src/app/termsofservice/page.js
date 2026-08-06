@@ -19,10 +19,9 @@ const TermsOfService = () => {
               </h2>
               <div className="space-y-4">
                 <p>
-                  We are BCB Labs L.L.C (&quot;Company,&quot; &quot;we,&quot;
+                  We are Giigs Inc (&quot;Company,&quot; &quot;we,&quot;
                   &quot;us,&quot; &quot;our&quot;), a company registered in
-                  Texas, United States at 959 Mesa Terrace Drive, Katy, TX
-                  77450.
+                  Texas, United States at 3921 Palmyra st New Orleans LA, 70119.
                 </p>
                 <p>
                   We operate the mobile application Giigs (the "App"), as well
@@ -49,8 +48,8 @@ const TermsOfService = () => {
                 <p>
                   These Legal Terms constitute a legally binding agreement made
                   between you, whether personally or on behalf of an entity
-                  ("you"), and BCB Labs L.L.C, concerning your access to and use
-                  of the Services. You agree that by accessing the Services, you
+                  ("you"), and Giigs Inc, concerning your access to and use of
+                  the Services. You agree that by accessing the Services, you
                   have read, understood, and agreed to be bound by all of these
                   Legal Terms.{" "}
                   <strong>
@@ -1146,9 +1145,9 @@ const TermsOfService = () => {
                   please contact us at:
                 </p>
                 <div className="bg-gray-800 p-4 rounded-lg">
-                  <p className="font-semibold text-white">BCB Labs L.L.C</p>
-                  <p>959 Mesa Terrace Drive</p>
-                  <p>Katy, TX 77450</p>
+                  <p className="font-semibold text-white">Giigs Inc</p>
+                  <p>3921 Palmyra st</p>
+                  <p>New Orleans LA, 70119</p>
                   <p>United States</p>
                   <p>Phone: 7702039091</p>
                   <p>

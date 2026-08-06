@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "RNJ66X94WK.com.brentpurks.Gigs",
+        "paths": ["/events/*"]
+      }
+    ]
+  }
+}

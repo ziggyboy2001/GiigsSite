@@ -8,7 +8,7 @@
 - Category: Live music discovery, concerts, local events, music booking
 - Platforms: iOS and Android (free to download)
 - Live cities: New Orleans, Atlanta (more being added)
-- Made by: BCB Labs L.L.C
+- Made by: Giigs Inc
 - Contact: cesar@getgiigs.com
 
 ## What fans can do

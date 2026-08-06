@@ -34,7 +34,7 @@ export const metadata = {
   ],
   authors: [{ name: "Giigs", url: SITE_URL }],
   creator: "Giigs",
-  publisher: "BCB Labs L.L.C",
+  publisher: "Giigs Inc",
   alternates: {
     canonical: "/",
   },

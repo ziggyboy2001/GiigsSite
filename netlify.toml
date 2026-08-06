@@ -9,3 +9,11 @@
 # route handlers like /robots.txt and /sitemap.xml, etc.)
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Apple App Site Association must be served as application/json. The file has no
+# extension, so set the content type explicitly (assetlinks.json is already
+# application/json via its extension). Used by iOS Universal Links (Phase 5).
+[[headers]]
+  for = "/.well-known/apple-app-site-association"
+  [headers.values]
+    Content-Type = "application/json"

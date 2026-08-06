@@ -70,9 +70,9 @@ const PrivacyPolicy = () => {
                 </li>
                 <li>
                   <strong className="text-white">Company</strong> (referred to
-                  as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this
-                  Agreement) refers to BCB Labs L.L.C, 959 Mesa Terrace Drive
-                  Katy, TX 77450-3808.
+                  as either &quot;the Company&quot;, &quot;We&quot;,
+                  &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to
+                  Giigs Inc, 3921 Palmyra st New Orleans LA, 70119.
                 </li>
                 <li>
                   <strong className="text-white">Country</strong> refers to:
@@ -184,16 +184,17 @@ const PrivacyPolicy = () => {
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Information regarding your location</li>
                   <li>
-                                       Pictures and other information from your Device&apos;s camera and
-                   photo library
+                    Pictures and other information from your Device&apos;s
+                    camera and photo library
                   </li>
                 </ul>
-                                 <p>
-                   We use this information to provide features of Our Service, to
-                   improve and customize Our Service. The information may be
-                   uploaded to the Company&apos;s servers and/or a Service Provider&apos;s
-                   server or it may be simply stored on Your device.
-                 </p>
+                <p>
+                  We use this information to provide features of Our Service, to
+                  improve and customize Our Service. The information may be
+                  uploaded to the Company&apos;s servers and/or a Service
+                  Provider&apos;s server or it may be simply stored on Your
+                  device.
+                </p>
                 <p>
                   You can enable or disable access to this information at any
                   time, through Your Device settings.

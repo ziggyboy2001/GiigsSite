@@ -17,8 +17,8 @@ const Footer = () => {
               className="mx-auto h-10 w-auto object-contain md:mx-0"
             />
             <p className="mt-4 max-w-xs text-sm text-white/45">
-              The real-time map of live music near you. Find shows tonight, build
-              bar crawls, and get tickets in a tap.
+              The real-time map of live music near you. Find shows tonight,
+              build bar crawls, and get tickets in a tap.
             </p>
           </div>
 
@@ -37,10 +37,16 @@ const Footer = () => {
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-semibold text-white">Get the app</span>
-              <Link href={APP_STORE_URL} className="text-white/55 hover:text-white">
+              <Link
+                href={APP_STORE_URL}
+                className="text-white/55 hover:text-white"
+              >
                 App Store
               </Link>
-              <Link href={PLAY_STORE_URL} className="text-white/55 hover:text-white">
+              <Link
+                href={PLAY_STORE_URL}
+                className="text-white/55 hover:text-white"
+              >
                 Google Play
               </Link>
             </div>
@@ -66,7 +72,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-10 border-t border-white/5 pt-6 text-center text-sm text-white/35">
-          © 2023–{new Date().getFullYear()} BCB Labs L.L.C. All rights reserved.
+          © 2023–{new Date().getFullYear()} Giigs Inc. All rights reserved.
         </div>
       </div>
     </footer>

@@ -85,13 +85,13 @@ export default function OpenInGiigs({ showId }) {
   return (
     <div className="flex flex-col items-center gap-3">
       <div onClick={onBadgeClick} className="flex justify-center">
-        <StoreBadges size={160} />
+        <StoreBadges size={160} className="justify-center" />
       </div>
       {isMobile && (
         <button
           type="button"
           onClick={openApp}
-          className="text-sm font-medium text-[#c9a2ff] underline underline-offset-4 transition hover:text-white"
+          className="inline-flex w-full items-center justify-center rounded-xl border border-[#8338ec] bg-[#8338ec]/10 px-6 py-3 text-sm font-semibold text-[#c9a2ff] transition hover:bg-[#8338ec]/20 hover:text-white sm:w-auto"
         >
           Already have the app? Open in Giigs
         </button>

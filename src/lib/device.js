@@ -18,4 +18,26 @@ export function detectPlatform() {
   return "desktop";
 }
 
+/**
+ * Detect embedded "in-app" browsers (Instagram, Facebook, TikTok, etc.).
+ * These webviews frequently block hand-off to the App Store / Play Store, so
+ * store and app-open links silently do nothing. Returns a friendly app name
+ * (e.g. "Instagram") when inside one, otherwise null.
+ */
+export function detectInAppBrowser() {
+  if (typeof navigator === "undefined") return null;
+  const ua = navigator.userAgent || navigator.vendor || "";
+
+  if (/Instagram/i.test(ua)) return "Instagram";
+  if (/FBAN|FBAV|FB_IAB|FBIOS/i.test(ua)) return "Facebook";
+  if (/Messenger/i.test(ua)) return "Messenger";
+  if (/TikTok|BytedanceWebview|musical_ly/i.test(ua)) return "TikTok";
+  if (/Snapchat/i.test(ua)) return "Snapchat";
+  if (/\bLine\//i.test(ua)) return "Line";
+  if (/Pinterest/i.test(ua)) return "Pinterest";
+  if (/LinkedInApp/i.test(ua)) return "LinkedIn";
+  if (/Twitter|TwitterAndroid/i.test(ua)) return "X";
+  return null;
+}
+
 export default detectPlatform;

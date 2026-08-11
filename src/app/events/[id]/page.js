@@ -14,6 +14,7 @@ import EventAnalytics from "./_components/EventAnalytics";
 import ShareButton from "./_components/ShareButton";
 import TicketButton from "./_components/TicketButton";
 import OpenInGiigs from "./_components/OpenInGiigs";
+import InAppBrowserBanner from "./_components/InAppBrowserBanner";
 import ShowRail from "./_components/ShowRail";
 
 const SITE_URL = "https://giigsapp.com";
@@ -363,6 +364,9 @@ export default async function EventPage({ params }) {
             See it on the live map, get directions, build a bar crawl, and find
             more live music near you.
           </p>
+          <div className="mx-auto mt-4 max-w-md">
+            <InAppBrowserBanner />
+          </div>
           <div className="mt-4 flex justify-center">
             <OpenInGiigs showId={show.id} />
           </div>

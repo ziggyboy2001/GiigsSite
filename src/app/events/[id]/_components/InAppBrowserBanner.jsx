@@ -56,6 +56,11 @@ export default function InAppBrowserBanner() {
     }
   };
 
+  const isNamed = app !== "in-app";
+  const heading = isNamed
+    ? `You’re in ${app}’s in-app browser`
+    : `You’re in an in-app browser`;
+  const subject = isNamed ? app : "This browser";
   const steps =
     platform === "ios"
       ? `Tap the ••• (or “aA”) button in the top corner, then “Open in Safari”.`
@@ -63,11 +68,9 @@ export default function InAppBrowserBanner() {
 
   return (
     <div className="mb-4 rounded-xl border border-amber-400/40 bg-amber-400/10 p-4 text-left">
-      <p className="text-sm font-semibold text-amber-200">
-        You’re in {app}’s in-app browser
-      </p>
+      <p className="text-sm font-semibold text-amber-200">{heading}</p>
       <p className="mt-1 text-sm text-amber-100/80">
-        {app} blocks opening the App Store here. Open this page in your real
+        {subject} blocks opening the App Store here. Open this page in your real
         browser to get Giigs. {steps}
       </p>
       <div className="mt-3 flex flex-wrap gap-2">

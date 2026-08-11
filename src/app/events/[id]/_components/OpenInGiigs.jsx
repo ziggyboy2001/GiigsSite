@@ -10,66 +10,24 @@ import { detectPlatform } from "../../../../lib/device";
 import { track } from "../../../../lib/analytics";
 
 /**
- * Device-detected "Open in Giigs" CTA.
- *  - iOS / Android → a single primary button that routes to the right store.
- *  - Desktop       → both store badges (tracked on click).
+ * Install CTA.
  *
- * Once Universal/App Links ship (Phase 5), tapping the page URL opens the app
- * directly for installed users before this even renders — so this CTA primarily
- * serves not-installed visitors, i.e. the store redirect.
+ * Store badges are the PRIMARY, always-rendered action — they're in the
+ * server-rendered HTML and never depend on client JS, so every visitor sees
+ * the same thing whether or not hydration runs (no more "badges for her,
+ * button for me" race, and nothing to break inside flaky in-app browsers).
+ *
+ * On mobile we progressively add a small secondary "already have the app?"
+ * deep link once the platform is detected. If JS never runs, the badges are
+ * still there and fully functional.
  */
 export default function OpenInGiigs({ showId }) {
   const [platform, setPlatform] = useState("desktop");
   useEffect(() => setPlatform(detectPlatform()), []);
 
-  // Try the app first, fall back to the store only if it doesn't take over.
-  //
-  // We CAN'T just navigate to this page's URL: iOS/Android suppress the
-  // Universal/App Link when it points at the domain you're already browsing.
-  // Instead we fire the app's custom scheme (giigs://events/:id — registered
-  // via app.json "scheme": "giigs" → RootApp maps it to the Playground detail
-  // sheet). If the app opens, the browser tab is backgrounded (visibility
-  // hidden / pagehide); if we're still visible after a short beat, the app
-  // isn't installed → send them to the store.
-  const openApp = (store) => {
-    const storeUrl = store === "ios" ? APP_STORE_URL : PLAY_STORE_URL;
-    track("open_in_giigs_clicked", { show_id: showId, platform });
+  const isMobile = platform === "ios" || platform === "android";
 
-    let appOpened = false;
-    const markOpened = () => {
-      appOpened = true;
-    };
-    document.addEventListener("visibilitychange", markOpened);
-    window.addEventListener("pagehide", markOpened);
-    window.addEventListener("blur", markOpened);
-
-    // Kick off the app open (user-gesture context keeps the scheme nav allowed).
-    window.location.href = `giigs://events/${encodeURIComponent(showId)}`;
-
-    window.setTimeout(() => {
-      document.removeEventListener("visibilitychange", markOpened);
-      window.removeEventListener("pagehide", markOpened);
-      window.removeEventListener("blur", markOpened);
-      if (appOpened || document.hidden) return; // app took over
-      track("store_redirected", { show_id: showId, store });
-      window.location.href = storeUrl;
-    }, 1500);
-  };
-
-  if (platform === "ios" || platform === "android") {
-    return (
-      <button
-        type="button"
-        onClick={() => openApp(platform)}
-        className="inline-flex w-full items-center justify-center rounded-xl bg-[#8338ec] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-[#8338ec]/25 transition hover:bg-[#9450f0] sm:w-auto"
-      >
-        Open in Giigs
-      </button>
-    );
-  }
-
-  // Desktop: show both badges. Infer the store from the clicked anchor so we can
-  // still record the redirect without forking StoreBadges.
+  // Record which store an anchor tap sends the user to.
   const onBadgeClick = (e) => {
     const anchor = e.target.closest("a");
     if (!anchor) return;
@@ -79,13 +37,65 @@ export default function OpenInGiigs({ showId }) {
       : href.includes("play.google.com")
       ? "android"
       : "unknown";
-    track("open_in_giigs_clicked", { show_id: showId, platform: "desktop" });
+    track("open_in_giigs_clicked", { show_id: showId, platform });
     track("store_redirected", { show_id: showId, store });
   };
 
+  // Secondary path for people who already have the app installed.
+  const openApp = () => {
+    const storeUrl = platform === "ios" ? APP_STORE_URL : PLAY_STORE_URL;
+    track("open_in_giigs_clicked", {
+      show_id: showId,
+      platform,
+      mode: "deep_link",
+    });
+
+    if (platform === "android") {
+      // intent:// opens the app if installed and cleanly falls back to the
+      // Play Store if not — no glitch, no manual timer, no error dialog.
+      window.location.href = `intent://events/${encodeURIComponent(
+        showId
+      )}#Intent;scheme=giigs;package=com.brentpurks.Gigs;S.browser_fallback_url=${encodeURIComponent(
+        storeUrl
+      )};end`;
+      return;
+    }
+
+    // iOS: fire the scheme, and if the app doesn't take over, go to the store.
+    let appOpened = false;
+    const markOpened = () => {
+      appOpened = true;
+    };
+    document.addEventListener("visibilitychange", markOpened);
+    window.addEventListener("pagehide", markOpened);
+    window.addEventListener("blur", markOpened);
+
+    window.location.href = `giigs://events/${encodeURIComponent(showId)}`;
+
+    window.setTimeout(() => {
+      document.removeEventListener("visibilitychange", markOpened);
+      window.removeEventListener("pagehide", markOpened);
+      window.removeEventListener("blur", markOpened);
+      if (appOpened || document.hidden) return;
+      track("store_redirected", { show_id: showId, store: platform });
+      window.location.href = storeUrl;
+    }, 1200);
+  };
+
   return (
-    <div onClick={onBadgeClick} className="flex justify-center">
-      <StoreBadges size={160} />
+    <div className="flex flex-col items-center gap-3">
+      <div onClick={onBadgeClick} className="flex justify-center">
+        <StoreBadges size={160} />
+      </div>
+      {isMobile && (
+        <button
+          type="button"
+          onClick={openApp}
+          className="text-sm font-medium text-[#c9a2ff] underline underline-offset-4 transition hover:text-white"
+        >
+          Already have the app? Open in Giigs
+        </button>
+      )}
     </div>
   );
 }

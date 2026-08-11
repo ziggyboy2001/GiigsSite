@@ -28,6 +28,7 @@ export function detectInAppBrowser() {
   if (typeof navigator === "undefined") return null;
   const ua = navigator.userAgent || navigator.vendor || "";
 
+  // Named apps first, so we can show a friendly "Instagram/TikTok" label.
   if (/Instagram/i.test(ua)) return "Instagram";
   if (/FBAN|FBAV|FB_IAB|FBIOS/i.test(ua)) return "Facebook";
   if (/Messenger/i.test(ua)) return "Messenger";
@@ -37,6 +38,22 @@ export function detectInAppBrowser() {
   if (/Pinterest/i.test(ua)) return "Pinterest";
   if (/LinkedInApp/i.test(ua)) return "LinkedIn";
   if (/Twitter|TwitterAndroid/i.test(ua)) return "X";
+
+  // Generic webview heuristics for unnamed in-app browsers. These share the
+  // same App Store / Play Store hand-off restrictions, so treat them the same.
+  const platform = detectPlatform();
+  // Android WebViews carry the "; wv)" token.
+  if (platform === "android" && /;\s*wv\)/i.test(ua)) return "in-app";
+  // iOS WKWebViews (used by in-app browsers) omit the "Safari" token that real
+  // Safari and Chrome/Firefox-for-iOS always include.
+  if (
+    platform === "ios" &&
+    !/Safari/i.test(ua) &&
+    !/CriOS|FxiOS|EdgiOS|OPiOS/i.test(ua)
+  ) {
+    return "in-app";
+  }
+
   return null;
 }
 

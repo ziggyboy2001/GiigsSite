@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export const APP_STORE_URL = "https://apps.apple.com/us/app/giigs/id6467974842";
+export const APP_STORE_URL = "https://apps.apple.com/app/id6467974842";
 export const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.brentpurks.Gigs&pcampaignid=web_share";
 

@@ -1,231 +1,141 @@
-/* eslint-disable react/no-unescaped-entities */
+import fs from "fs";
+import path from "path";
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+export const metadata = {
+  title: "Privacy Policy | Giigs",
+  description:
+    "How Giigs collects, uses, stores, and shares your information, including Google Calendar data.",
+};
+
+// Inline formatting: **bold**, [label](url), `code`
+function renderInline(text, keyPrefix) {
+  const nodes = [];
+  const regex = /(\*\*([^*]+)\*\*)|(\[([^\]]+)\]\(([^)]+)\))|(`([^`]+)`)/g;
+  let lastIndex = 0;
+  let match;
+  let i = 0;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+    if (match[1]) {
+      nodes.push(
+        <strong key={`${keyPrefix}-b-${i++}`} className="font-semibold text-white">
+          {match[2]}
+        </strong>
+      );
+    } else if (match[3]) {
+      nodes.push(
+        <a
+          key={`${keyPrefix}-l-${i++}`}
+          href={match[5]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="break-words text-blue-400 underline hover:text-blue-300"
+        >
+          {match[4]}
+        </a>
+      );
+    } else if (match[6]) {
+      nodes.push(
+        <code
+          key={`${keyPrefix}-c-${i++}`}
+          className="break-words rounded bg-gray-800 px-1 py-0.5 text-sm text-purple-300"
+        >
+          {match[7]}
+        </code>
+      );
+    }
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+  return nodes;
+}
+
+function renderMarkdown(markdown) {
+  const lines = markdown.replace(/\r\n/g, "\n").split("\n");
+  const blocks = [];
+  let key = 0;
+
+  lines.forEach((line) => {
+    if (!line.trim()) return;
+
+    const heading = line.match(/^(#{1,6})\s+(.*)$/);
+    if (heading) {
+      const level = heading[1].length;
+      const inner = renderInline(heading[2], `h-${key}`);
+      if (level === 1) {
+        blocks.push(
+          <h1 key={key++} className="mb-4 mt-2 text-4xl font-bold text-white">
+            {inner}
+          </h1>
+        );
+      } else if (level === 2) {
+        blocks.push(
+          <h2 key={key++} className="mb-3 mt-10 text-2xl font-bold text-white">
+            {inner}
+          </h2>
+        );
+      } else if (level === 3) {
+        blocks.push(
+          <h3 key={key++} className="mb-2 mt-6 text-xl font-bold text-white">
+            {inner}
+          </h3>
+        );
+      } else {
+        blocks.push(
+          <h4 key={key++} className="mb-2 mt-4 text-lg font-semibold text-white">
+            {inner}
+          </h4>
+        );
+      }
+      return;
+    }
+
+    const bullet = line.match(/^(\s*)-\s+(.*)$/);
+    if (bullet) {
+      const indentSpaces = bullet[1].replace(/\t/g, "  ").length;
+      const indentLevel = Math.floor(indentSpaces / 2);
+      blocks.push(
+        <div
+          key={key++}
+          className="mb-2 flex leading-relaxed text-[#ADB7BE]"
+          style={{ marginLeft: 8 + indentLevel * 20 }}
+        >
+          <span className="mr-2 select-none">&bull;</span>
+          <span className="flex-1">{renderInline(bullet[2], `li-${key}`)}</span>
+        </div>
+      );
+      return;
+    }
+
+    blocks.push(
+      <p key={key++} className="mb-3 leading-relaxed text-[#ADB7BE]">
+        {renderInline(line.trim(), `p-${key}`)}
+      </p>
+    );
+  });
+
+  return blocks;
+}
+
 const PrivacyPolicy = () => {
+  const markdown = fs.readFileSync(
+    path.join(process.cwd(), "src/app/privacy/privacyPolicy.md"),
+    "utf8"
+  );
+  const content = renderMarkdown(markdown);
+
   return (
     <main className="flex min-h-screen flex-col bg-[#121212]">
       <Navbar />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-16 max-w-4xl">
-        <article className="prose prose-invert prose-lg max-w-none">
-          <h1 className="text-4xl font-bold text-white mb-4">Privacy Policy</h1>
-          <p className="text-[#ADB7BE] mb-8">Last updated: October 18, 2023</p>
-
-          <div className="text-[#ADB7BE] space-y-8 leading-relaxed">
-            <section>
-              <div className="space-y-4">
-                <p>
-                  This Privacy Policy describes Our policies and procedures on
-                  the collection, use and disclosure of Your information when
-                  You use the Service and tells You about Your privacy rights
-                  and how the law protects You.
-                </p>
-                <p>
-                  We use Your Personal data to provide and improve the Service.
-                  By using the Service, You agree to the collection and use of
-                  information in accordance with this Privacy Policy. This
-                  Privacy Policy has been created with the help of the Privacy
-                  Policy Generator.
-                </p>
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-                Interpretation and Definitions
-              </h2>
-
-              <h3 className="text-xl font-bold text-white mt-6 mb-3">
-                Interpretation
-              </h3>
-              <p>
-                The words of which the initial letter is capitalized have
-                meanings defined under the following conditions. The following
-                definitions shall have the same meaning regardless of whether
-                they appear in singular or in plural.
-              </p>
-
-              <h3 className="text-xl font-bold text-white mt-6 mb-3">
-                Definitions
-              </h3>
-              <p>For the purposes of this Privacy Policy:</p>
-              <ul className="list-disc pl-6 space-y-3">
-                <li>
-                  <strong className="text-white">Account</strong> means a unique
-                  account created for You to access our Service or parts of our
-                  Service.
-                </li>
-                <li>
-                  <strong className="text-white">Affiliate</strong> means an
-                  entity that controls, is controlled by or is under common
-                  control with a party, where "control" means ownership of 50%
-                  or more of the shares, equity interest or other securities
-                  entitled to vote for election of directors or other managing
-                  authority.
-                </li>
-                <li>
-                  <strong className="text-white">Application</strong> refers to
-                  Giigs, the software program provided by the Company.
-                </li>
-                <li>
-                  <strong className="text-white">Company</strong> (referred to
-                  as either &quot;the Company&quot;, &quot;We&quot;,
-                  &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to
-                  Giigs Inc, 3921 Palmyra st New Orleans LA, 70119.
-                </li>
-                <li>
-                  <strong className="text-white">Country</strong> refers to:
-                  Texas, United States
-                </li>
-                <li>
-                  <strong className="text-white">Device</strong> means any
-                  device that can access the Service such as a computer, a
-                  cellphone or a digital tablet.
-                </li>
-                <li>
-                  <strong className="text-white">Personal Data</strong> is any
-                  information that relates to an identified or identifiable
-                  individual.
-                </li>
-                <li>
-                  <strong className="text-white">Service</strong> refers to the
-                  Application.
-                </li>
-                <li>
-                  <strong className="text-white">Service Provider</strong> means
-                  any natural or legal person who processes the data on behalf
-                  of the Company. It refers to third-party companies or
-                  individuals employed by the Company to facilitate the Service,
-                  to provide the Service on behalf of the Company, to perform
-                  services related to the Service or to assist the Company in
-                  analyzing how the Service is used.
-                </li>
-                <li>
-                  <strong className="text-white">Usage Data</strong> refers to
-                  data collected automatically, either generated by the use of
-                  the Service or from the Service infrastructure itself (for
-                  example, the duration of a page visit).
-                </li>
-                <li>
-                  <strong className="text-white">You</strong> means the
-                  individual accessing or using the Service, or the company, or
-                  other legal entity on behalf of which such individual is
-                  accessing or using the Service, as applicable.
-                </li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-                Collecting and Using Your Personal Data
-              </h2>
-
-              <h3 className="text-xl font-bold text-white mt-6 mb-3">
-                Types of Data Collected
-              </h3>
-
-              <h4 className="text-lg font-bold text-white mt-4 mb-2">
-                Personal Data
-              </h4>
-              <div className="space-y-4">
-                <p>
-                  While using Our Service, We may ask You to provide Us with
-                  certain personally identifiable information that can be used
-                  to contact or identify You. Personally identifiable
-                  information may include, but is not limited to:
-                </p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Email address</li>
-                  <li>First name and last name</li>
-                  <li>Phone number</li>
-                  <li>Address, State, Province, ZIP/Postal code, City</li>
-                  <li>Usage Data</li>
-                </ul>
-              </div>
-
-              <h4 className="text-lg font-bold text-white mt-4 mb-2">
-                Usage Data
-              </h4>
-              <div className="space-y-4">
-                <p>
-                  Usage Data is collected automatically when using the Service.
-                </p>
-                <p>
-                  Usage Data may include information such as Your Device's
-                  Internet Protocol address (e.g. IP address), browser type,
-                  browser version, the pages of our Service that You visit, the
-                  time and date of Your visit, the time spent on those pages,
-                  unique device identifiers and other diagnostic data.
-                </p>
-                <p>
-                  When You access the Service by or through a mobile device, We
-                  may collect certain information automatically, including, but
-                  not limited to, the type of mobile device You use, Your mobile
-                  device unique ID, the IP address of Your mobile device, Your
-                  mobile operating system, the type of mobile Internet browser
-                  You use, unique device identifiers and other diagnostic data.
-                </p>
-                <p>
-                  We may also collect information that Your browser sends
-                  whenever You visit our Service or when You access the Service
-                  by or through a mobile device.
-                </p>
-              </div>
-
-              <h4 className="text-lg font-bold text-white mt-4 mb-2">
-                Information Collected while Using the Application
-              </h4>
-              <div className="space-y-4">
-                <p>
-                  While using Our Application, in order to provide features of
-                  Our Application, We may collect, with Your prior permission:
-                </p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Information regarding your location</li>
-                  <li>
-                    Pictures and other information from your Device&apos;s
-                    camera and photo library
-                  </li>
-                </ul>
-                <p>
-                  We use this information to provide features of Our Service, to
-                  improve and customize Our Service. The information may be
-                  uploaded to the Company&apos;s servers and/or a Service
-                  Provider&apos;s server or it may be simply stored on Your
-                  device.
-                </p>
-                <p>
-                  You can enable or disable access to this information at any
-                  time, through Your Device settings.
-                </p>
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-                Contact Us
-              </h2>
-              <div className="space-y-4">
-                <p>
-                  If you have any questions about this Privacy Policy, You can
-                  contact us:
-                </p>
-                <div className="bg-gray-800 p-4 rounded-lg">
-                  <p>
-                    By email:{" "}
-                    <a
-                      href="mailto:support@bcblabs.com"
-                      className="text-blue-400 hover:text-blue-300"
-                    >
-                      support@bcblabs.com
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </section>
-          </div>
-        </article>
+      <div className="container mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-12">
+        <article className="max-w-none">{content}</article>
       </div>
       <Footer />
     </main>

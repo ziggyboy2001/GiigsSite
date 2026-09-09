@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import getShowByID from "../../../lib/getShowByID";
@@ -16,6 +15,7 @@ import TicketButton from "./_components/TicketButton";
 import OpenInGiigs from "./_components/OpenInGiigs";
 import InAppBrowserBanner from "./_components/InAppBrowserBanner";
 import ShowRail from "./_components/ShowRail";
+import TrackedLink from "../../components/analytics/TrackedLink";
 
 const SITE_URL = "https://giigsapp.com";
 
@@ -181,13 +181,19 @@ export default async function EventPage({ params }) {
       {/* Minimal header — self-contained (homepage Navbar uses page anchors) */}
       <header className="border-b border-white/10">
         <div className="container mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-12">
-          <Link href="/" className="flex items-center" aria-label="Giigs home">
+          <TrackedLink
+            href="/"
+            label="event_header_logo"
+            properties={{ show_id: show.id }}
+            className="flex items-center"
+            aria-label="Giigs home"
+          >
             <img
               src="/images/giigsVector.png"
               alt="Giigs"
               className="h-10 w-auto"
             />
-          </Link>
+          </TrackedLink>
           <div className="flex items-center gap-2">
             <ShareButton
               showId={show.id}
@@ -196,12 +202,14 @@ export default async function EventPage({ params }) {
               }`}
               className="rounded-full border border-white/15 px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-white/10"
             />
-            <Link
+            <TrackedLink
               href="/#download"
+              event="get_app_clicked"
+              properties={{ show_id: show.id, location: "event_header" }}
               className="rounded-full bg-[#8338ec] px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-[#9450f0]"
             >
               Get the app
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </header>
@@ -288,14 +296,21 @@ export default async function EventPage({ params }) {
                   </span>
                 )}
                 {dir && (
-                  <a
+                  <TrackedLink
                     href={dir}
+                    event="directions_clicked"
+                    properties={{
+                      show_id: show.id,
+                      has_coords:
+                        Number.isFinite(show.venue?.lat) &&
+                        Number.isFinite(show.venue?.lng),
+                    }}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-1 inline-block text-sm font-medium text-[#a578f6] hover:text-[#c4a4fa]"
                   >
                     Get directions →
-                  </a>
+                  </TrackedLink>
                 )}
               </dd>
             </div>
@@ -343,13 +358,25 @@ export default async function EventPage({ params }) {
 
         {/* Related rails — more from this artist + more like this. Each hides
             itself when the backend has nothing to suggest. */}
-        <ShowRail title={artistRailTitle} shows={fromArtist} />
-        <ShowRail title="More shows like this" shows={similar} />
+        <ShowRail
+          title={artistRailTitle}
+          shows={fromArtist}
+          fromShowId={show.id}
+          rail="artist"
+        />
+        <ShowRail
+          title="More shows like this"
+          shows={similar}
+          fromShowId={show.id}
+          rail="similar"
+        />
 
         {/* CTA (device detection + funnel tracking arrive in Phase 4) */}
         <section className="mt-10 rounded-2xl border border-[#8338ec]/30 bg-gradient-to-b from-[#8338ec]/10 to-white/5 p-6 text-center">
-          <Link
+          <TrackedLink
             href="/"
+            label="event_cta_logo"
+            properties={{ show_id: show.id, location: "event_cta" }}
             aria-label="Giigs home"
             className="mx-auto mb-3 inline-block"
           >
@@ -358,7 +385,7 @@ export default async function EventPage({ params }) {
               alt="Giigs"
               className="h-14 w-auto drop-shadow-lg transition hover:opacity-90"
             />
-          </Link>
+          </TrackedLink>
           <h2 className="text-xl font-bold">Open this show on Giigs</h2>
           <p className="mx-auto mt-1 max-w-md text-sm text-[#ADB7BE]">
             See it on the live map, get directions, build a bar crawl, and find
@@ -377,12 +404,22 @@ export default async function EventPage({ params }) {
         <div className="container mx-auto flex flex-col items-center gap-2 px-4 py-6 text-sm text-[#7a828c] sm:flex-row sm:justify-between sm:px-6 lg:px-12">
           <span>© {new Date().getFullYear()} Giigs · Giigs Inc</span>
           <div className="flex gap-4">
-            <Link href="/privacy" className="hover:text-white">
+            <TrackedLink
+              href="/privacy"
+              label="event_footer_privacy"
+              properties={{ show_id: show.id }}
+              className="hover:text-white"
+            >
               Privacy
-            </Link>
-            <Link href="/termsofservice" className="hover:text-white">
+            </TrackedLink>
+            <TrackedLink
+              href="/termsofservice"
+              label="event_footer_terms"
+              properties={{ show_id: show.id }}
+              className="hover:text-white"
+            >
               Terms
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </footer>

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { APP_STORE_URL, PLAY_STORE_URL } from "./StoreBadges";
+import TrackedLink from "./analytics/TrackedLink";
 
 const Footer = () => {
   return (
@@ -25,48 +25,76 @@ const Footer = () => {
           <div className="grid grid-cols-2 gap-10 text-sm sm:grid-cols-3">
             <div className="flex flex-col gap-3">
               <span className="font-semibold text-white">Product</span>
-              <Link href="#discover" className="text-white/55 hover:text-white">
+              <TrackedLink
+                href="#discover"
+                label="footer_discover"
+                properties={{ location: "footer" }}
+                className="text-white/55 hover:text-white"
+              >
                 Discover
-              </Link>
-              <Link href="#how" className="text-white/55 hover:text-white">
+              </TrackedLink>
+              <TrackedLink
+                href="#how"
+                label="footer_how_it_works"
+                properties={{ location: "footer" }}
+                className="text-white/55 hover:text-white"
+              >
                 How it works
-              </Link>
-              <Link href="#venues" className="text-white/55 hover:text-white">
+              </TrackedLink>
+              <TrackedLink
+                href="#venues"
+                label="footer_for_venues"
+                properties={{ location: "footer" }}
+                className="text-white/55 hover:text-white"
+              >
                 For venues
-              </Link>
+              </TrackedLink>
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-semibold text-white">Get the app</span>
-              <Link
+              <TrackedLink
                 href={APP_STORE_URL}
+                label="footer_app_store"
+                properties={{ location: "footer", store: "ios" }}
                 className="text-white/55 hover:text-white"
               >
                 App Store
-              </Link>
-              <Link
+              </TrackedLink>
+              <TrackedLink
                 href={PLAY_STORE_URL}
+                label="footer_play_store"
+                properties={{ location: "footer", store: "android" }}
                 className="text-white/55 hover:text-white"
               >
                 Google Play
-              </Link>
+              </TrackedLink>
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-semibold text-white">Legal</span>
-              <Link href="/privacy" className="text-white/55 hover:text-white">
+              <TrackedLink
+                href="/privacy"
+                label="footer_privacy"
+                properties={{ location: "footer" }}
+                className="text-white/55 hover:text-white"
+              >
                 Privacy Policy
-              </Link>
-              <Link
+              </TrackedLink>
+              <TrackedLink
                 href="/termsofservice"
+                label="footer_terms"
+                properties={{ location: "footer" }}
                 className="text-white/55 hover:text-white"
               >
                 Terms of Service
-              </Link>
-              <a
+              </TrackedLink>
+              <TrackedLink
                 href="mailto:cesar@getgiigs.com"
+                label="footer_contact"
+                properties={{ location: "footer" }}
                 className="text-white/55 hover:text-white"
               >
                 Contact
-              </a>
+              </TrackedLink>
             </div>
           </div>
         </div>

@@ -56,7 +56,10 @@ const HeroSection = () => {
             ))}
           </div>
 
-          <StoreBadges className="mt-8 justify-center lg:justify-start" />
+          <StoreBadges
+            location="hero"
+            className="mt-8 justify-center lg:justify-start"
+          />
         </motion.div>
 
         <motion.div

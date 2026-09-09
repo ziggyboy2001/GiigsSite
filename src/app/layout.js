@@ -1,4 +1,5 @@
 import "./globals.css";
+import AnalyticsProvider from "./components/analytics/AnalyticsProvider";
 
 const SITE_URL = "https://giigsapp.com";
 const OG_IMAGE = `${SITE_URL}/images/giigSplash.png`;
@@ -210,6 +211,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="font-sans">
+        <AnalyticsProvider />
         {children}
         <script
           type="application/ld+json"

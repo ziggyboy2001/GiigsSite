@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { APP_STORE_URL } from "./StoreBadges";
+import TrackedLink from "./analytics/TrackedLink";
+import TrackedButton from "./analytics/TrackedButton";
 
 const navLinks = [
   { title: "Discover", path: "#discover" },
@@ -11,6 +13,9 @@ const navLinks = [
   { title: "For venues", path: "#venues" },
   { title: "Download", path: "#download" },
 ];
+
+// "How it works" -> "nav_how_it_works"
+const navLabel = (title) => `nav_${title.toLowerCase().replace(/\s+/g, "_")}`;
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -30,7 +35,12 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-5 py-3 lg:py-4">
-        <Link href="/" aria-label="Giigs home" className="flex items-center">
+        <TrackedLink
+          href="/"
+          label="nav_logo"
+          aria-label="Giigs home"
+          className="flex items-center"
+        >
           <Image
             src="/images/giigsVector916.png"
             alt="Giigs logo"
@@ -39,31 +49,37 @@ const Navbar = () => {
             className="h-9 w-auto object-contain"
             priority
           />
-        </Link>
+        </TrackedLink>
 
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <li key={link.path}>
-              <Link
+              <TrackedLink
                 href={link.path}
+                label={navLabel(link.title)}
+                properties={{ location: "navbar", title: link.title }}
                 className="text-sm font-medium text-white/70 transition-colors hover:text-white"
               >
                 {link.title}
-              </Link>
+              </TrackedLink>
             </li>
           ))}
         </ul>
 
         <div className="hidden md:block">
-          <Link
+          <TrackedLink
             href={APP_STORE_URL}
+            label="nav_get_app"
+            properties={{ location: "navbar", store: "ios" }}
             className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-colors hover:bg-brand-600"
           >
             Get the app
-          </Link>
+          </TrackedLink>
         </div>
 
-        <button
+        <TrackedButton
+          label="nav_menu_toggle"
+          properties={{ action: open ? "close" : "open" }}
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           className="rounded-lg border border-white/15 p-2 text-white md:hidden"
@@ -73,7 +89,7 @@ const Navbar = () => {
           ) : (
             <Bars3Icon className="h-5 w-5" />
           )}
-        </button>
+        </TrackedButton>
       </div>
 
       {open && (
@@ -81,23 +97,27 @@ const Navbar = () => {
           <ul className="flex flex-col gap-1 px-5 py-4">
             {navLinks.map((link) => (
               <li key={link.path}>
-                <Link
+                <TrackedLink
                   href={link.path}
+                  label={navLabel(link.title)}
+                  properties={{ location: "mobile_menu", title: link.title }}
                   onClick={() => setOpen(false)}
                   className="block rounded-lg px-2 py-3 text-base text-white/80 hover:bg-white/5 hover:text-white"
                 >
                   {link.title}
-                </Link>
+                </TrackedLink>
               </li>
             ))}
             <li className="pt-2">
-              <Link
+              <TrackedLink
                 href={APP_STORE_URL}
+                label="nav_get_app"
+                properties={{ location: "mobile_menu", store: "ios" }}
                 onClick={() => setOpen(false)}
                 className="block rounded-full bg-brand-500 px-5 py-3 text-center text-base font-semibold text-white"
               >
                 Get the app
-              </Link>
+              </TrackedLink>
             </li>
           </ul>
         </div>

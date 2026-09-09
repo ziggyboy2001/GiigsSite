@@ -1,17 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
-
 import { formatDateShort, formatTime } from "../../../../lib/formatShowDate";
+import TrackedLink from "../../../components/analytics/TrackedLink";
 
 /**
  * Horizontal, side-scrollable rail of related shows for the public event page.
- * Server-rendered <Link> cards so the internal links are crawlable (SEO) and no
- * client JS is needed for the scroll (native overflow-x + scroll-snap).
+ * Server-rendered cards (via the client TrackedLink island) so the internal
+ * links stay crawlable (SEO) and no client JS is needed for the scroll (native
+ * overflow-x + scroll-snap).
  *
- * @param {string} title   Section heading (e.g. "More from The Revivalists").
- * @param {Array}  shows   Public show payloads (from getRelatedShows).
+ * @param {string} title       Section heading (e.g. "More from The Revivalists").
+ * @param {Array}  shows       Public show payloads (from getRelatedShows).
+ * @param {string} fromShowId  The event page these related shows are shown on.
+ * @param {string} rail        Which rail this is ("artist" | "similar") — for analytics.
  */
-export default function ShowRail({ title, shows }) {
+export default function ShowRail({ title, shows, fromShowId, rail }) {
   if (!Array.isArray(shows) || shows.length === 0) return null;
 
   return (
@@ -21,15 +23,21 @@ export default function ShowRail({ title, shows }) {
         className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0"
         role="list"
       >
-        {shows.map((s) => (
-          <RailCard key={s.id} show={s} />
+        {shows.map((s, i) => (
+          <RailCard
+            key={s.id}
+            show={s}
+            fromShowId={fromShowId}
+            rail={rail}
+            position={i}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-function RailCard({ show }) {
+function RailCard({ show, fromShowId, rail, position }) {
   const img = show.heroImageUrl || show.thumbImageUrl || null;
   const artist = show.artist || show.title || "Live music";
   const venue = show.venue?.name || "";
@@ -39,8 +47,16 @@ function RailCard({ show }) {
   const meta = [dateShort, timeStr].filter(Boolean).join(" · ");
 
   return (
-    <Link
+    <TrackedLink
       href={`/events/${show.id}`}
+      event="related_show_clicked"
+      properties={{
+        from_show_id: fromShowId,
+        to_show_id: show.id,
+        rail,
+        position,
+        artist,
+      }}
       role="listitem"
       className="group w-40 flex-shrink-0 snap-start"
     >
@@ -71,6 +87,6 @@ function RailCard({ show }) {
         </p>
       )}
       {meta && <p className="truncate text-xs text-[#7a828c]">{meta}</p>}
-    </Link>
+    </TrackedLink>
   );
 }

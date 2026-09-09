@@ -85,7 +85,11 @@ export default function OpenInGiigs({ showId }) {
   return (
     <div className="flex flex-col items-center gap-3">
       <div onClick={onBadgeClick} className="flex justify-center">
-        <StoreBadges size={160} className="justify-center" />
+        <StoreBadges
+          size={160}
+          location="event_open_in_giigs"
+          className="justify-center"
+        />
       </div>
       {isMobile && (
         <button

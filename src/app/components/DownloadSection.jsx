@@ -30,7 +30,11 @@ const DownloadSection = () => {
             </p>
 
             <div className="mt-9 flex flex-col items-center gap-8">
-              <StoreBadges className="justify-center" size={200} />
+              <StoreBadges
+                location="download"
+                className="justify-center"
+                size={200}
+              />
               <Image
                 src="/images/giigsQRCode.png"
                 alt="Scan to download Giigs"

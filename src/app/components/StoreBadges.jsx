@@ -1,17 +1,22 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import TrackedLink from "./analytics/TrackedLink";
 
 export const APP_STORE_URL = "https://apps.apple.com/app/id6467974842";
 export const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.brentpurks.Gigs&pcampaignid=web_share";
 
-const StoreBadges = ({ className = "", size = 180 }) => {
+// `location` labels WHERE on the site the badge was tapped (hero, download,
+// footer, event_page…) so the same `app_store_badge` / `play_store_badge`
+// events can be broken down by placement in PostHog.
+const StoreBadges = ({ className = "", size = 180, location = "unknown" }) => {
   const height = Math.round((size / 180) * 54);
   return (
     <div className={`flex flex-wrap items-center gap-3 ${className}`}>
-      <Link
+      <TrackedLink
         href={APP_STORE_URL}
+        label="app_store_badge"
+        properties={{ location, store: "ios" }}
         aria-label="Download Giigs on the App Store"
         className="transition-transform duration-200 hover:-translate-y-0.5"
       >
@@ -22,9 +27,11 @@ const StoreBadges = ({ className = "", size = 180 }) => {
           height={height}
           className="h-[54px] w-auto object-contain rounded-lg"
         />
-      </Link>
-      <Link
+      </TrackedLink>
+      <TrackedLink
         href={PLAY_STORE_URL}
+        label="play_store_badge"
+        properties={{ location, store: "android" }}
         aria-label="Get Giigs on Google Play"
         className="transition-transform duration-200 hover:-translate-y-0.5"
       >
@@ -35,7 +42,7 @@ const StoreBadges = ({ className = "", size = 180 }) => {
           height={height}
           className="h-[54px] w-auto object-contain rounded-lg"
         />
-      </Link>
+      </TrackedLink>
     </div>
   );
 };

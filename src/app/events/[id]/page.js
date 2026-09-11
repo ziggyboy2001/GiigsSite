@@ -208,7 +208,7 @@ export default async function EventPage({ params }) {
               properties={{ show_id: show.id, location: "event_header" }}
               className="rounded-full bg-[#8338ec] px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-[#9450f0]"
             >
-              Get the app
+              {"See What's Live →"}
             </TrackedLink>
           </div>
         </div>

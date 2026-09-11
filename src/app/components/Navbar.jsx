@@ -73,7 +73,7 @@ const Navbar = () => {
             properties={{ location: "navbar", store: "ios" }}
             className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-colors hover:bg-brand-600"
           >
-            Get the app
+            {"See What's Live →"}
           </TrackedLink>
         </div>
 
@@ -116,7 +116,7 @@ const Navbar = () => {
                 onClick={() => setOpen(false)}
                 className="block rounded-full bg-brand-500 px-5 py-3 text-center text-base font-semibold text-white"
               >
-                Get the app
+                {"See What's Live →"}
               </TrackedLink>
             </li>
           </ul>

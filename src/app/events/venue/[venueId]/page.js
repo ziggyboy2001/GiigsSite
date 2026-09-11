@@ -211,7 +211,7 @@ export default async function VenuePage({ params }) {
             properties={{ venue_id: venueKey, location: "venue_header" }}
             className="flex-shrink-0 rounded-full bg-[#8338ec] px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-[#9450f0]"
           >
-            Get the app
+            {"See What's Live →"}
           </TrackedLink>
         </div>
       </header>
@@ -284,7 +284,8 @@ export default async function VenuePage({ params }) {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#8338ec] opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[#8338ec]" />
                   </span>
-                  {shows.length} upcoming {shows.length === 1 ? "show" : "shows"}
+                  {shows.length} upcoming{" "}
+                  {shows.length === 1 ? "show" : "shows"}
                 </span>
                 {nextLabel && (
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3.5 py-1.5 text-sm font-medium text-white/70 ring-1 ring-white/10">
@@ -302,7 +303,7 @@ export default async function VenuePage({ params }) {
                 properties={{ venue_id: venueKey, location: "venue_hero" }}
                 className="inline-flex items-center justify-center rounded-full bg-[#8338ec] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#8338ec]/25 transition hover:bg-[#9450f0]"
               >
-                Get the app
+                {"See What's Live →"}
               </TrackedLink>
               {dir && (
                 <TrackedLink
@@ -356,7 +357,10 @@ export default async function VenuePage({ params }) {
               <TrackedLink
                 href="/#download"
                 event="get_app_clicked"
-                properties={{ venue_id: venueKey, location: "venue_empty_state" }}
+                properties={{
+                  venue_id: venueKey,
+                  location: "venue_empty_state",
+                }}
                 className="inline-flex items-center justify-center rounded-full bg-[#8338ec] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-[#8338ec]/25 transition hover:bg-[#9450f0]"
               >
                 Get the app
@@ -406,10 +410,10 @@ export default async function VenuePage({ params }) {
             <img
               src="/images/giigsVector.png"
               alt="Giigs"
-              className="h-14 w-auto drop-shadow-lg transition hover:opacity-90"
+              className="h-20 w-auto drop-shadow-lg transition hover:opacity-90 sm:h-24"
             />
           </TrackedLink>
-          <h2 className="text-xl font-bold">Find live music on Giigs</h2>
+          <h2 className="text-xl font-bold">{"What's playing tonight?"}</h2>
           <p className="mx-auto mt-1 max-w-md text-sm text-[#ADB7BE]">
             See shows on the live map, get directions, build a bar crawl, and
             never miss a night out.

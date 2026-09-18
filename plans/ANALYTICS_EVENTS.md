@@ -176,6 +176,17 @@ Specific events (not `cta_clicked`) that match the existing funnel naming.
 | `venue_page_viewed` | Venue landing page viewed (top of venue funnel) | `venue_id`, `venue_name`, `upcoming_count` |
 | `venue_show_clicked` | An upcoming-show card tapped → goes to `/events/[id]` | `venue_id`, `to_show_id`, `position`, `artist` |
 
+### Artist page (`/artists/[slug]`)
+
+| Event | Fires when | Properties |
+| --- | --- | --- |
+| `artist_page_viewed` | Artist page viewed (top of artist funnel) | `artist_slug`, `artist_name`, `platform` (`platform`/`external`), `upcoming_count` |
+| `artist_show_clicked` | An upcoming-show card tapped → goes to `/events/[id]` | `artist_id`, `to_show_id`, `position`, `venue` |
+| `artist_listen_played` | A "Listen" clip played, or a streaming link tapped | `artist_slug`, `medium` (`audio`/`spotify`/`apple`/`youtube`), `track_index` (audio only) |
+| `artist_social_clicked` | A social/follow link tapped | `artist_id`, `network` |
+
+The artist page also fires `get_app_clicked` (locations: `artist_header`, `artist_hero`, `artist_cta`, `artist_empty_state`) and labelled `cta_clicked` for the header/CTA logo + footer links.
+
 ---
 
 ## 4. Pre-existing event-page triggers (unchanged)
@@ -186,6 +197,8 @@ These already existed; documented here for completeness. They now also carry the
 | Event | Fires when | Properties |
 | --- | --- | --- |
 | `event_link_viewed` | Event page viewed (top of funnel) | `show_id`, `state` |
+| `event_view_artist_clicked` | "Artist" CTA tapped → `/artists/[slug]` | `show_id`, `artist` |
+| `event_view_venue_clicked` | "Venue" CTA tapped → `/events/venue/[venueId]` | `show_id`, `venue` |
 | `tickets_clicked` | "Get tickets" tapped | `show_id` |
 | `share_clicked` | Share button tapped | `show_id` |
 | `open_in_giigs_clicked` | "Open in Giigs" / store badge tapped | `show_id`, `platform`, sometimes `mode: deep_link` |

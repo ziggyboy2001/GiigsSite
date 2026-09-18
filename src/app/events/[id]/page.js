@@ -105,6 +105,18 @@ function buildEventJsonLd(show, id) {
   return jsonLd;
 }
 
+// Slug for the /artists/[slug] and /events/venue/[venueId] pages. Both backend
+// endpoints re-normalize the incoming param (non-alphanumerics → spaces), so a
+// hyphenated ASCII slug of the name resolves the same platform-or-external row.
+function toSlug(s) {
+  return String(s || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 function directionsUrl(venue) {
   if (!venue) return null;
   if (Number.isFinite(venue.lat) && Number.isFinite(venue.lng)) {
@@ -170,6 +182,10 @@ export default async function EventPage({ params }) {
   const isCancelled = show.state === "cancelled";
   const isPast = show.state === "past";
   const jsonLd = buildEventJsonLd(show, params.id);
+
+  // Links to the fuller artist / venue landing pages (both resolve by name).
+  const artistSlug = show.artist ? toSlug(show.artist) : null;
+  const venueSlug = show.venue?.name ? toSlug(show.venue.name) : null;
 
   return (
     <main className="flex min-h-screen flex-col bg-[#121212] text-white">
@@ -260,6 +276,62 @@ export default async function EventPage({ params }) {
         </h1>
         {show.venue?.name && (
           <p className="mt-1 text-lg text-[#ADB7BE]">{show.venue.name}</p>
+        )}
+
+        {/* Explore CTAs — jump to the full artist / venue landing pages */}
+        {((artistSlug && show.artist) || (venueSlug && show.venue?.name)) && (
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+            {artistSlug && show.artist && (
+              <TrackedLink
+                href={`/artists/${artistSlug}`}
+                event="event_view_artist_clicked"
+                properties={{ show_id: show.id, artist: show.artist }}
+                className="group flex flex-1 items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-[#8338ec]/50 hover:bg-[#8338ec]/10"
+              >
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#8338ec]/15 text-[#a578f6]">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z" />
+                  </svg>
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[11px] font-semibold uppercase tracking-wide text-[#7a828c]">
+                    Artist
+                  </span>
+                  <span className="block truncate font-semibold text-white">
+                    {show.artist}
+                  </span>
+                </span>
+                <span className="ml-auto text-[#a578f6] transition group-hover:translate-x-0.5">
+                  →
+                </span>
+              </TrackedLink>
+            )}
+            {venueSlug && show.venue?.name && (
+              <TrackedLink
+                href={`/events/venue/${venueSlug}`}
+                event="event_view_venue_clicked"
+                properties={{ show_id: show.id, venue: show.venue.name }}
+                className="group flex flex-1 items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-[#8338ec]/50 hover:bg-[#8338ec]/10"
+              >
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#8338ec]/15 text-[#a578f6]">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
+                  </svg>
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[11px] font-semibold uppercase tracking-wide text-[#7a828c]">
+                    Venue
+                  </span>
+                  <span className="block truncate font-semibold text-white">
+                    {show.venue.name}
+                  </span>
+                </span>
+                <span className="ml-auto text-[#a578f6] transition group-hover:translate-x-0.5">
+                  →
+                </span>
+              </TrackedLink>
+            )}
+          </div>
         )}
 
         {/* Facts */}

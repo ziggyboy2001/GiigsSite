@@ -113,6 +113,10 @@ function toSlug(s) {
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
+    // Strip apostrophes (ASCII + smart) BEFORE hyphenating, exactly like the
+    // backend normalize(): "Vaughan's Lounge" → "vaughans-lounge", not
+    // "vaughan-s-lounge" (which would normalize to "vaughan s lounge" and 404).
+    .replace(/[\u2018\u2019']+/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }

@@ -7,6 +7,9 @@ import { APP_STORE_URL } from "./StoreBadges";
 import TrackedLink from "./analytics/TrackedLink";
 import TrackedButton from "./analytics/TrackedButton";
 
+const PORTAL_URL =
+  process.env.NEXT_PUBLIC_PORTAL_URL || "https://portal.giigsapp.com";
+
 const navLinks = [
   { title: "Discover", path: "#discover" },
   { title: "How it works", path: "#how" },
@@ -66,7 +69,15 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-5 md:flex">
+          <TrackedLink
+            href={PORTAL_URL}
+            label="nav_log_in"
+            properties={{ location: "navbar" }}
+            className="text-sm font-semibold text-white/80 transition-colors hover:text-white"
+          >
+            Log in
+          </TrackedLink>
           <TrackedLink
             href={APP_STORE_URL}
             label="nav_get_app"
@@ -108,6 +119,17 @@ const Navbar = () => {
                 </TrackedLink>
               </li>
             ))}
+            <li>
+              <TrackedLink
+                href={PORTAL_URL}
+                label="nav_log_in"
+                properties={{ location: "mobile_menu" }}
+                onClick={() => setOpen(false)}
+                className="block rounded-lg px-2 py-3 text-base font-semibold text-white/80 hover:bg-white/5 hover:text-white"
+              >
+                Log in
+              </TrackedLink>
+            </li>
             <li className="pt-2">
               <TrackedLink
                 href={APP_STORE_URL}
